@@ -14,28 +14,27 @@ namespace Yol.Services.IRepository
         Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>> expression = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<string> includes = null);
+            List<string> includes = null, bool tracking = false);
 
         Task<IPagedList<T>> GetPagedList(
             RequestParams requestParams,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<string> includes = null);
+            List<string> includes = null,
+            bool tracking = false);
 
         Task<IPagedList<T>> SearchPagedList(
             RequestParams requestParams,
             Expression<Func<T, bool>> expression = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<string> includes = null);
+            List<string> includes = null,
+            bool tracking = false);
 
-        Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null);
+        Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null,
+            bool tracking = false);
 
         Task Insert(T entity);
 
-        Task InsertRange(IEnumerable<T> entities);
-
         void Delete(T entity);
-
-        Task DeleteRange(IEnumerable<T> entities);
 
         void Update(T entity);
     }
