@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yol.Data.Models;
 
 namespace Yol.Services.IRepository
 {
@@ -14,5 +15,8 @@ namespace Yol.Services.IRepository
         Task<string> SaveFileAsync(IFormFile file, string folder = "Images");
 
         void DeleteFile(string fileName, string folder = "Images");
+        IGenericRepository<Company> Companies { get; }
+        IGenericRepository<Road> Roads { get; }
+
     }
 }
