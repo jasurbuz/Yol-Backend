@@ -18,5 +18,10 @@ namespace Yol.Data.Models
         public IList<IList<string>> Cordinate { get; set; }
         public string Source { get; set; }
         public string Responsible { get; set; }
+
+        #region Realtion
+        public Guid CompanyId { get; set; }
+        public Company Company { get; set; }
+        #endregion
     }
 }

@@ -17,5 +17,10 @@ namespace Yol.Data.Models
         public int SucessfullPlans { get; set; }
         public string FileName { get; set; }
         public string LicenseFileName { get; set; }
+
+        #region Relation
+        public ICollection<Road> Roads { get; set; }
+        #endregion
+
     }
 }

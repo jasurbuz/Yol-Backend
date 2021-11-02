@@ -14,5 +14,20 @@ namespace YolData.Context
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            #region Relation
+            builder.Entity<Company>()
+                .HasMany<Road>(company => company.Roads)
+                .WithOne(road => road.Company);
+            #endregion
+
+            base.OnModelCreating(builder);
+        }
+
+        public DbSet<Road> Roads { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }
