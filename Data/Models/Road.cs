@@ -15,13 +15,14 @@ namespace Yol.Data.Models
         public DateTime FinishedAt { get; set; }
         public decimal SeparatedMoney { get; set; }
         public decimal UsedMoney { get; set; }
-        public IList<IList<string>> Cordinate { get; set; }
         public string Source { get; set; }
         public string Responsible { get; set; }
 
         #region Realtion
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
+
+        public ICollection<Coordinate> Cordinates { get; set; }
         #endregion
     }
 }

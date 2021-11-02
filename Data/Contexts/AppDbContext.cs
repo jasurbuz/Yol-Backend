@@ -19,9 +19,17 @@ namespace YolData.Context
         {
 
             #region Relation
+
             builder.Entity<Company>()
                 .HasMany<Road>(company => company.Roads)
                 .WithOne(road => road.Company);
+            builder.Entity<Road>()
+                .HasMany<Coordinate>(road => road.Cordinates)
+                .WithOne(coordinate => coordinate.Road);
+            builder.Entity<Coordinate>()
+                .HasMany<CoordinateValue>(coordinate => coordinate.Values)
+                .WithOne(value => value.Coordinate);
+
             #endregion
 
             base.OnModelCreating(builder);
