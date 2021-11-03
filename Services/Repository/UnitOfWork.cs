@@ -13,11 +13,15 @@ namespace Yol.Services.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
+        #region Private mambers
         private readonly AppDbContext _context;
         private readonly IHostingEnvironment _host;
         
         private IGenericRepository<Company> _companies;
         private IGenericRepository<Road> _roads;
+        private IGenericRepository<Coordinate> _coordinates;
+        private IGenericRepository<CoordinateValue> _values;
+        #endregion
 
         #region Constructors
         public UnitOfWork(AppDbContext context, IHostingEnvironment hostEnvironmnet)
@@ -29,8 +33,11 @@ namespace Yol.Services.Repository
 
         #endregion
 
+        #region Public mambers
         public IGenericRepository<Company> Companies => _companies ??= new GenericRepository<Company>(_context);
         public IGenericRepository<Road> Roads => _roads ??= new GenericRepository<Road>(_context);
+        public IGenericRepository<Coordinate> Coordinates => _coordinates ??= new GenericRepository<Coordinate>(_context);
+        public IGenericRepository<CoordinateValue> Values => _values ??= new GenericRepository<CoordinateValue>(_context);
 
         public void Dispose()
         {
@@ -43,7 +50,8 @@ namespace Yol.Services.Repository
         {
             await _context.SaveChangesAsync();
         }
-        
+        #endregion
+
         #region File functions
 
         public async Task<string> SaveFileAsync(IFormFile file, string folder = "Images")

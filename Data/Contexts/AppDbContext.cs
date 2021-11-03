@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Yol.Data.Models;
 
 namespace YolData.Context
@@ -37,5 +33,7 @@ namespace YolData.Context
 
         public DbSet<Road> Roads { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Coordinate> Coordinates { get; set; }
+        public DbSet<CoordinateValue> Values { get; set; }
     }
 }
