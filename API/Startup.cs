@@ -29,10 +29,18 @@ namespace API
                     Configuration.GetConnectionString("DefaultConnectionString")
                 ));
 
-            services.AddCors();
+            
             services.AddIdentityCore<ApiUser>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

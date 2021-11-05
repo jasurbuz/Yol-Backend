@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yol.Data.Models
+namespace Yol.Services.DTOs.CompanyDtos
 {
-    public class Company
+    public class CompanyForCreationDto
     {
-        public Guid Id { get; set; }
+        [Required]
         public string Fullname { get; set; }
+        [Required]
         public string INN { get; set; }
+        [Required]
         public DateTime DateOfFoundation { get; set; }
+        [Required]
         public int NumberOfEmployees { get; set; }
-        public string SucessfullPlansFileName { get; set; }
-        public string LicenseFileName { get; set; }
-
-        #region Relation
-        public ICollection<Road> Roads { get; set; }
-        #endregion
-
+        [Required]
+        public IFormFile SucessfullPlansFile { get; set; }
+        [Required]
+        public IFormFile LicenseFile { get; set; }
     }
 }
