@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using YolData.Context;
 using Npgsql;
+using Yol.Services.Repository;
+using Yol.Services.IRepository;
+using Yol.Data.Models;
 
 namespace API
 {
@@ -25,6 +28,16 @@ namespace API
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnectionString")
                 ));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+            services.AddIdentityCore<ApiUser>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
