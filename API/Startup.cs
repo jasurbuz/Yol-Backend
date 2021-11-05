@@ -29,13 +29,7 @@ namespace API
                     Configuration.GetConnectionString("DefaultConnectionString")
                 ));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", builder =>
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+            services.AddCors();
             services.AddIdentityCore<ApiUser>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
