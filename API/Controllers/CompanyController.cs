@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Yol.Data.Models;
+using Yol.Services.DTOs;
 using Yol.Services.DTOs.CompanyDtos;
 using Yol.Services.IRepository;
+using Yol.API.Extensions;
 
 namespace Yol.API.Controllers
 {
@@ -34,6 +36,31 @@ namespace Yol.API.Controllers
             await _unitOfWork.Companies.Insert(company);
             await _unitOfWork.Save();
             return Ok();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetCompanies([FromQuery] RequestParams requestParams)
+        {
+            if (requestParams.OrderBy is null)
+                requestParams.OrderBy = "Name";
+
+            var subjects = await _unitOfWork.Companies.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy),
+                includes: new List<string> { "Roads" });
+
+            var response = new ResponseDto
+            {
+                PageCount = subjects.PageCount,
+                Total = subjects.TotalItemCount,
+                Current = subjects.PageNumber,
+                PageSize = subjects.PageSize,
+                HasPreviousPage = subjects.HasPreviousPage,
+                HasNextPage = subjects.HasNextPage,
+                FirstItemOnPage = subjects.FirstItemOnPage,
+                LastItemOnPage = subjects.LastItemOnPage,
+                Data = _mapper.Map<IEnumerable<CompanyDTO>>(subjects)
+            };
+
+
+            return Ok(response);
         }
     }
 }
