@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Yol.Data.Models;
 using Yol.Services.IRepository;
-using YolData.Context;
+using YolData;
 
 namespace Yol.Services.Repository
 {

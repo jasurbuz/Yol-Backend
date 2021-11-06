@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Yol.Data.Models;
 
-namespace YolData.Context
+namespace YolData
 {
     public class AppDbContext : IdentityDbContext<ApiUser, Role, Guid>
     {
@@ -11,6 +11,10 @@ namespace YolData.Context
             : base(options)
         { }
 
+        public DbSet<Road> Roads { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Coordinate> Coordinates { get; set; }
+        public DbSet<CoordinateValue> Values { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -30,10 +34,5 @@ namespace YolData.Context
 
             base.OnModelCreating(builder);
         }
-
-        public DbSet<Road> Roads { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Coordinate> Coordinates { get; set; }
-        public DbSet<CoordinateValue> Values { get; set; }
     }
 }

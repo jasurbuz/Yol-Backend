@@ -5,11 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using YolData.Context;
+using YolData;
 using Npgsql;
 using Yol.Services.Repository;
 using Yol.Services.IRepository;
 using Yol.Data.Models;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace API
 {
@@ -29,7 +32,7 @@ namespace API
                     Configuration.GetConnectionString("DefaultConnectionString")
                 ));
 
-            
+            services.AddMemoryCache();
             services.AddIdentityCore<ApiUser>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
@@ -40,6 +43,7 @@ namespace API
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
@@ -62,6 +66,7 @@ namespace API
             app.UseCors("AllowAll");
 
             app.UseRouting();
+            
 
             app.UseAuthorization();
 

@@ -10,8 +10,8 @@ using YolData;
 namespace Yol.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211103050106_Initial")]
-    partial class Initial
+    [Migration("20211106112142_ModelChanged")]
+    partial class ModelChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,9 +205,6 @@ namespace Yol.Data.Migrations
                     b.Property<DateTime>("DateOfFoundation")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("FileName")
-                        .HasColumnType("text");
-
                     b.Property<string>("Fullname")
                         .HasColumnType("text");
 
@@ -220,8 +217,8 @@ namespace Yol.Data.Migrations
                     b.Property<int>("NumberOfEmployees")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SucessfullPlans")
-                        .HasColumnType("integer");
+                    b.Property<string>("SucessfullPlansFileName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using YolData.Context;
+using YolData;
 
 namespace Yol.Data.Migrations
 {
@@ -203,9 +203,6 @@ namespace Yol.Data.Migrations
                     b.Property<DateTime>("DateOfFoundation")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("FileName")
-                        .HasColumnType("text");
-
                     b.Property<string>("Fullname")
                         .HasColumnType("text");
 
@@ -218,8 +215,8 @@ namespace Yol.Data.Migrations
                     b.Property<int>("NumberOfEmployees")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SucessfullPlans")
-                        .HasColumnType("integer");
+                    b.Property<string>("SucessfullPlansFileName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

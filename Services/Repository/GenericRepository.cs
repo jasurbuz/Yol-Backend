@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using X.PagedList;
 using Yol.Services.DTOs;
 using Yol.Services.IRepository;
-using YolData.Context;
+using YolData;
+using YolData;
 
 namespace BuxoroIlmZiyo.Services.Repository
 {
