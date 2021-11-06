@@ -41,22 +41,22 @@ namespace Yol.API.Controllers
         public async Task<IActionResult> GetCompanies([FromQuery] RequestParams requestParams)
         {
             if (requestParams.OrderBy is null)
-                requestParams.OrderBy = "Name";
+                requestParams.OrderBy = "Fullname";
 
-            var subjects = await _unitOfWork.Companies.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy),
+            var companies = await _unitOfWork.Companies.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy),
                 includes: new List<string> { "Roads" });
 
             var response = new ResponseDto
             {
-                PageCount = subjects.PageCount,
-                Total = subjects.TotalItemCount,
-                Current = subjects.PageNumber,
-                PageSize = subjects.PageSize,
-                HasPreviousPage = subjects.HasPreviousPage,
-                HasNextPage = subjects.HasNextPage,
-                FirstItemOnPage = subjects.FirstItemOnPage,
-                LastItemOnPage = subjects.LastItemOnPage,
-                Data = _mapper.Map<IEnumerable<CompanyDTO>>(subjects)
+                PageCount = companies.PageCount,
+                Total = companies.TotalItemCount,
+                Current = companies.PageNumber,
+                PageSize = companies.PageSize,
+                HasPreviousPage = companies.HasPreviousPage,
+                HasNextPage = companies.HasNextPage,
+                FirstItemOnPage = companies.FirstItemOnPage,
+                LastItemOnPage = companies.LastItemOnPage,
+                Data = _mapper.Map<IEnumerable<CompanyDTO>>(companies)
             };
 
 
