@@ -62,6 +62,15 @@ namespace Yol.API.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetCompany(Guid Id)
+        {
+            var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
+            if(company is null)
+                return NotFound("Company not found");
+            return Ok(company);
+        }
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteCompany(Guid Id)
         {
