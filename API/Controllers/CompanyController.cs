@@ -67,8 +67,40 @@ namespace Yol.API.Controllers
         {
             var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
             if(company is null)
-                return NotFound("Company not found");
+                return NotFound("Company doesn't found");
             return Ok(company);
+        
+        }
+
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> UpdateCompany([FromForm] CompanyForCreationDto companyDto, Guid Id)
+        {
+            var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
+            if (company is null)
+                return NotFound("Company doesn't found");
+
+            _mapper.Map(companyDto, company);
+            
+            if(companyDto.LicenseFile is not null)
+            {
+                if(company.LicenseFileName is not null)
+                    _unitOfWork.DeleteFile(company.LicenseFileName, "License");
+
+                company.LicenseFileName = await _unitOfWork.SaveFileAsync(companyDto.LicenseFile);
+            }
+
+            if (companyDto.SucessfullPlansFile is not null)
+            {
+                if (company.SucessfullPlansFileName is not null)
+                    _unitOfWork.DeleteFile(company.SucessfullPlansFileName, "Plans");
+
+                company.LicenseFileName = await _unitOfWork.SaveFileAsync(companyDto.SucessfullPlansFile);
+            }
+
+            _unitOfWork.Companies.Update(company);
+            await _unitOfWork.Save();
+
+            return NoContent();
         }
 
         [HttpDelete("{Id}")]
@@ -76,7 +108,7 @@ namespace Yol.API.Controllers
         {
             var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
             if (company is null)
-                return NotFound("Company not found");
+                return NotFound("Company doesn't found");
             _unitOfWork.Companies.Delete(company);
             await _unitOfWork.Save();
             return NoContent();

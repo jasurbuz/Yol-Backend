@@ -35,7 +35,6 @@ namespace BuxoroIlmZiyo.Services.Repository
 
         #endregion
 
-
         #region CRUD
 
         public void Delete(T entity)
