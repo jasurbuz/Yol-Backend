@@ -59,8 +59,16 @@ namespace Yol.API.Controllers
                 Data = _mapper.Map<IEnumerable<CompanyDTO>>(companies)
             };
 
-
             return Ok(response);
         }
+        [HttpDelete]
+        public async Task DeleteCompany(Company company)
+        {
+            if(company != null)
+            {
+                _unitOfWork.Companies.Delete(company);
+            }
+        }
+        
     }
 }
