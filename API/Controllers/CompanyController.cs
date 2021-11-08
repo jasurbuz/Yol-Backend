@@ -61,8 +61,9 @@ namespace Yol.API.Controllers
 
             return Ok(response);
         }
+
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteCompany([FromForm] Guid Id)
+        public async Task<IActionResult> DeleteCompany(Guid Id)
         {
             var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
             if (company is null)
