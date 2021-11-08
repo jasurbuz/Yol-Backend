@@ -61,13 +61,15 @@ namespace Yol.API.Controllers
 
             return Ok(response);
         }
-        [HttpDelete]
-        public async Task DeleteCompany(Company company)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteCompany([FromForm] Guid Id)
         {
-            if(company != null)
-            {
-                _unitOfWork.Companies.Delete(company);
-            }
+            var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
+            if (company is null)
+                return NotFound("Company not found");
+            _unitOfWork.Companies.Delete(company);
+            await _unitOfWork.Save();
+            return NoContent();
         }
         
     }
