@@ -43,7 +43,8 @@ namespace Yol.API.Controllers
             if (requestParams.OrderBy is null)
                 requestParams.OrderBy = "Fullname";
 
-            var companies = await _unitOfWork.Companies.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy),
+            var companies = await _unitOfWork.Companies.GetPagedList(requestParams, 
+                order => order.OrderBy(requestParams.OrderBy),
                 includes: new List<string> { "Roads" });
 
             var response = new ResponseDto

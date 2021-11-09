@@ -19,6 +19,8 @@ namespace Yol.Services.IRepository
         IGenericRepository<Road> Roads { get; }
         IGenericRepository<Coordinate> Coordinates { get; }
         IGenericRepository<CoordinateValue> Values { get; }
+        IGenericRepository<Application> Applications { get; }
+        IGenericRepository<News> News { get; }
 
     }
 }

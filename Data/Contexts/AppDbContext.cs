@@ -15,6 +15,9 @@ namespace YolData
         public DbSet<Company> Companies { get; set; }
         public DbSet<Coordinate> Coordinates { get; set; }
         public DbSet<CoordinateValue> Values { get; set; }
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<News> Newses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
