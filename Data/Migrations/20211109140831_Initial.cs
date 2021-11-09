@@ -9,6 +9,25 @@ namespace Yol.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FullName = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Province = table.Column<string>(type: "text", nullable: true),
+                    District = table.Column<string>(type: "text", nullable: true),
+                    RoadName = table.Column<string>(type: "text", nullable: true),
+                    ApplicationText = table.Column<string>(type: "text", nullable: true),
+                    AdditionalFileName = table.Column<string>(type: "text", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -30,6 +49,7 @@ namespace Yol.Data.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     MiddleName = table.Column<string>(type: "text", nullable: true),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -59,8 +79,7 @@ namespace Yol.Data.Migrations
                     INN = table.Column<string>(type: "text", nullable: true),
                     DateOfFoundation = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     NumberOfEmployees = table.Column<int>(type: "integer", nullable: false),
-                    SucessfullPlans = table.Column<int>(type: "integer", nullable: false),
-                    FileName = table.Column<string>(type: "text", nullable: true),
+                    SucessfullPlansFileName = table.Column<string>(type: "text", nullable: true),
                     LicenseFileName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -175,6 +194,26 @@ namespace Yol.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Newses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Text = table.Column<string>(type: "text", nullable: true),
+                    AdminId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Newses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Newses_AspNetUsers_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roads",
                 columns: table => new
                 {
@@ -280,6 +319,11 @@ namespace Yol.Data.Migrations
                 column: "RoadId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Newses_AdminId",
+                table: "Newses",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roads_CompanyId",
                 table: "Roads",
                 column: "CompanyId");
@@ -292,6 +336,9 @@ namespace Yol.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Applications");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -306,6 +353,9 @@ namespace Yol.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Newses");
 
             migrationBuilder.DropTable(
                 name: "Values");

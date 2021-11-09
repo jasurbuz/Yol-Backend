@@ -133,6 +133,10 @@ namespace Yol.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -192,6 +196,43 @@ namespace Yol.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApiUser");
+                });
+
+            modelBuilder.Entity("Yol.Data.Models.Application", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AdditionalFileName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ApplicationText")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("District")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Province")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoadName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Applications");
                 });
 
             modelBuilder.Entity("Yol.Data.Models.Company", b =>
@@ -256,6 +297,28 @@ namespace Yol.Data.Migrations
                     b.HasIndex("CoordinateId");
 
                     b.ToTable("Values");
+                });
+
+            modelBuilder.Entity("Yol.Data.Models.News", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("Newses");
                 });
 
             modelBuilder.Entity("Yol.Data.Models.Road", b =>
@@ -323,6 +386,13 @@ namespace Yol.Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Yol.Data.Models.Indentity.Admin", b =>
+                {
+                    b.HasBaseType("Yol.Data.Models.ApiUser");
+
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -398,6 +468,17 @@ namespace Yol.Data.Migrations
                     b.Navigation("Coordinate");
                 });
 
+            modelBuilder.Entity("Yol.Data.Models.News", b =>
+                {
+                    b.HasOne("Yol.Data.Models.Indentity.Admin", "Admin")
+                        .WithMany("News")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("Yol.Data.Models.Road", b =>
                 {
                     b.HasOne("Yol.Data.Models.Company", "Company")
@@ -422,6 +503,11 @@ namespace Yol.Data.Migrations
             modelBuilder.Entity("Yol.Data.Models.Road", b =>
                 {
                     b.Navigation("Cordinates");
+                });
+
+            modelBuilder.Entity("Yol.Data.Models.Indentity.Admin", b =>
+                {
+                    b.Navigation("News");
                 });
 #pragma warning restore 612, 618
         }

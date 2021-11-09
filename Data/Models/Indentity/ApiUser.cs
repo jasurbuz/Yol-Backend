@@ -15,7 +15,5 @@ namespace Yol.Data.Models
 
         public string MiddleName { get; set; }
 
-
-
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using Yol.Data.Models;
+using Yol.Data.Models.Indentity;
 
 namespace YolData
 {
@@ -17,6 +18,7 @@ namespace YolData
         public DbSet<CoordinateValue> Values { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<News> Newses { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,7 +34,10 @@ namespace YolData
             builder.Entity<Coordinate>()
                 .HasMany<CoordinateValue>(coordinate => coordinate.Values)
                 .WithOne(value => value.Coordinate);
-
+            
+            builder.Entity<Admin>()
+                .HasMany<News>(user => user.News)
+                .WithOne(news => news.Admin);
             #endregion
 
             base.OnModelCreating(builder);
