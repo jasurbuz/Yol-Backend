@@ -15,7 +15,7 @@ namespace Yol.Services.DTOs.ApplicationDtos
         public string District { get; set; }
         public string RoadName { get; set; }
         public string ApplicationText { get; set; }
-        public string AdditionalFile { get; set; }
+        public string AdditionalFileName { get; set; }
         public DateTime CreatedTime { get; set; }
     }
 }

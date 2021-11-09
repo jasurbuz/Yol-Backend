@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Yol.API.Extensions;
 using Yol.Data.Models;
 using Yol.Services.DTOs;
 using Yol.Services.DTOs.ApplicationDtos;
@@ -28,13 +28,11 @@ namespace Yol.API.Controllers
         public async Task<IActionResult> CreateApplication([FromForm] ApplicationForCreationDto creationDto)
         {
             var application = _mapper.Map<Application>(creationDto);
-            if (creationDto != null)
-            {
-                await _unitOfWork.Applications.Insert(application);
-                await _unitOfWork.Save();
-                return Ok();
-            }
-            return BadRequest();
+            if(creationDto.AdditionalFile != null)
+                application.AdditionalFileName = await _unitOfWork.SaveFileAsync(creationDto.AdditionalFile, "Others");
+            await _unitOfWork.Applications.Insert(application);
+            await _unitOfWork.Save();
+            return Ok();
         }
 
         [HttpGet]
@@ -42,12 +40,10 @@ namespace Yol.API.Controllers
         {
             if(requestParams.OrderBy is null)
             {
-                requestParams.OrderBy = "Fullname";
+                requestParams.OrderBy = "CreatedTime";
             }
 
-            var applications = await _unitOfWork.Applications.GetPagedList(requestParams, 
-                order => order.OrderBy(requestParams.OrderBy),
-                includes: new List<string> { "CreatedTime" });
+            var applications = await _unitOfWork.Applications.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy));
 
             var response = new ResponseDto
             {

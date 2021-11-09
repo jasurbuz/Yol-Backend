@@ -8,7 +8,7 @@ namespace Yol.Data.Models
 {
     public class Application
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string FullName { get; set; }
         public string Email { get; set; }
@@ -16,7 +16,7 @@ namespace Yol.Data.Models
         public string District { get; set; }
         public string RoadName { get; set; }
         public string ApplicationText { get; set; }
-        public string AdditionalFile { get; set; }
+        public string AdditionalFileName { get; set; }
         public DateTime CreatedTime { get; set; }
 
     }
