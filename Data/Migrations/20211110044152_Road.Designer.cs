@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using YolData;
@@ -9,9 +10,10 @@ using YolData;
 namespace Yol.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211110044152_Road")]
+    partial class Road
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,9 +178,6 @@ namespace Yol.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Region")
-                        .HasColumnType("text");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -302,25 +301,6 @@ namespace Yol.Data.Migrations
                     b.ToTable("Values");
                 });
 
-            modelBuilder.Entity("Yol.Data.Models.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("RoadId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoadId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("Yol.Data.Models.News", b =>
                 {
                     b.Property<Guid>("Id")
@@ -360,12 +340,6 @@ namespace Yol.Data.Migrations
 
                     b.Property<double>("Lenghth")
                         .HasColumnType("double precision");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Region")
-                        .HasColumnType("text");
 
                     b.Property<string>("Responsible")
                         .HasColumnType("text");
@@ -501,17 +475,6 @@ namespace Yol.Data.Migrations
                     b.Navigation("Coordinate");
                 });
 
-            modelBuilder.Entity("Yol.Data.Models.Image", b =>
-                {
-                    b.HasOne("Yol.Data.Models.Road", "Road")
-                        .WithMany("Images")
-                        .HasForeignKey("RoadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Road");
-                });
-
             modelBuilder.Entity("Yol.Data.Models.News", b =>
                 {
                     b.HasOne("Yol.Data.Models.Indentity.Admin", "Admin")
@@ -555,8 +518,6 @@ namespace Yol.Data.Migrations
             modelBuilder.Entity("Yol.Data.Models.Road", b =>
                 {
                     b.Navigation("Cordinates");
-
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Yol.Data.Models.Indentity.Admin", b =>

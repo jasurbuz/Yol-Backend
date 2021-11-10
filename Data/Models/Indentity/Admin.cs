@@ -10,6 +10,7 @@ namespace Yol.Data.Models.Indentity
     {
         #region Relation
         public ICollection<News> News { get; set; }
+        public ICollection<Road> Roads { get; set; }
         #endregion
     }
 }

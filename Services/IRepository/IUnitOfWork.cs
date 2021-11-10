@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yol.Data.Models;
+using Yol.Data.Models.Indentity;
 
 namespace Yol.Services.IRepository
 {
@@ -21,6 +22,8 @@ namespace Yol.Services.IRepository
         IGenericRepository<CoordinateValue> Values { get; }
         IGenericRepository<Application> Applications { get; }
         IGenericRepository<News> News { get; }
+        IGenericRepository<Admin> Admins { get; }
+        IGenericRepository<Image> Images { get; }
 
     }
 }

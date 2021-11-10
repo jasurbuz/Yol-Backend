@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Yol.Data.Models;
+using Yol.Data.Models.Indentity;
 using Yol.Services.IRepository;
 using YolData;
 
@@ -21,6 +22,8 @@ namespace Yol.Services.Repository
         private IGenericRepository<Road> _roads;
         private IGenericRepository<Coordinate> _coordinates;
         private IGenericRepository<CoordinateValue> _values;
+        private IGenericRepository<Image> _images; 
+        private IGenericRepository<Admin> _admins;
         private GenericRepository<Application> _application;
         private GenericRepository<News> _news;
         #endregion
@@ -42,6 +45,8 @@ namespace Yol.Services.Repository
         public IGenericRepository<CoordinateValue> Values => _values ??= new GenericRepository<CoordinateValue>(_context);
         public IGenericRepository<Application> Applications => _application ??= new GenericRepository<Application>(_context);
         public IGenericRepository<News> News => _news ??= new GenericRepository<News>(_context);
+        public IGenericRepository<Admin> Admins => _admins ??= new GenericRepository<Admin>(_context);
+        public IGenericRepository<Image> Images => _images ??= new GenericRepository<Image>(_context);
 
         public void Dispose()
         {
