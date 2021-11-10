@@ -13,7 +13,7 @@ using Yol.API.Extensions;
 
 namespace Yol.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CompanyController : ControllerBase
     {
