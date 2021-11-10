@@ -46,7 +46,6 @@ namespace Yol.API.Controllers
             var companies = await _unitOfWork.Companies.GetPagedList(requestParams, 
                 order => order.OrderBy(requestParams.OrderBy),
                 includes: new List<string> { "Roads" });
-
             var response = new ResponseDto
             {
                 PageCount = companies.PageCount,

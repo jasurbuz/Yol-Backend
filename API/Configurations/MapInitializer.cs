@@ -7,6 +7,7 @@ using Yol.Data.Models;
 using Yol.Services;
 using Yol.Services.DTOs.ApplicationDtos;
 using Yol.Services.DTOs.CompanyDtos;
+using Yol.Services.DTOs.RoadDtos;
 
 namespace Yol.API.Configurations
 {
@@ -25,10 +26,11 @@ namespace Yol.API.Configurations
                                 : null)).ReverseMap();
 
             CreateMap<Application, ApplicationForCreationDto>().ReverseMap();
-
             CreateMap<Application, ApplicationDto>().ForMember(dto => dto.AdditionalFileName,
                 src => src.MapFrom(source => !string.IsNullOrEmpty(source.AdditionalFileName)
                 ? $"{CustomServices.GetBaseUrl()}/Others/{source.AdditionalFileName}" : null)).ReverseMap();
+
+            CreateMap<Road, RoadForCreationDTO>().ReverseMap();
         }
     }
 }

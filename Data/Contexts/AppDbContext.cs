@@ -12,6 +12,8 @@ namespace YolData
             : base(options)
         { }
 
+        #region Public mambers
+
         public DbSet<Road> Roads { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Coordinate> Coordinates { get; set; }
@@ -19,6 +21,9 @@ namespace YolData
         public DbSet<Application> Applications { get; set; }
         public DbSet<News> Newses { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Image> Images { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,6 +36,9 @@ namespace YolData
             builder.Entity<Road>()
                 .HasMany<Coordinate>(road => road.Cordinates)
                 .WithOne(coordinate => coordinate.Road);
+            builder.Entity<Road>()
+                .HasMany<Image>(road => road.Images)
+                .WithOne(image => image.Road);
             builder.Entity<Coordinate>()
                 .HasMany<CoordinateValue>(coordinate => coordinate.Values)
                 .WithOne(value => value.Coordinate);
@@ -38,6 +46,10 @@ namespace YolData
             builder.Entity<Admin>()
                 .HasMany<News>(user => user.News)
                 .WithOne(news => news.Admin);
+
+            builder.Entity<Admin>()
+                .HasMany<Road>(user => user.Roads)
+                .WithOne(road => road.Admin);
             #endregion
 
             base.OnModelCreating(builder);
