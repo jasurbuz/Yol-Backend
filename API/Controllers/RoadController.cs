@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Yol.API.Extensions;
 using Yol.Data.Models;
+using Yol.Services;
 using Yol.Services.DTOs;
 using Yol.Services.DTOs.RoadDtos;
 using Yol.Services.IRepository;
@@ -73,6 +75,32 @@ namespace Yol.API.Controllers
                 Data = _mapper.Map<IEnumerable<RoadDTO>>(roads)
             };
             return Ok(response);
+        }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetRoad(Guid Id)
+        {
+            var road = await _unitOfWork.Roads.Get(p => p.Id == Id, new List<string>() { "Admin", "Company", "Images" });
+            if(road is null)
+                return NotFound("Road doesn't found");
+            var images = new List<string>();
+            foreach (var image in road.Images)
+                images.Add($"{CustomServices.GetBaseUrl()}/Images/{image.FileName}");
+            var coordinates = await _unitOfWork.Coordinates.GetAll(p => p.RoadId == Id, includes: new List<string>() { "Values" });
+            var res = coordinates.ToList().GroupBy(p => p.RoadId).ToList();
+            var coordinate = new List<decimal[]>();
+            foreach (var item in res)
+                foreach (var item2 in item)
+                {
+                    decimal[] array = new decimal[2];
+                    for (int i = 0; i < 2; i++) 
+                        array[i] = item2.Values.ToList()[i].Value;
+                    coordinate.Add(array);
+                }
+            var responce = _mapper.Map<RoadDTO>(road);
+            responce.Images = images;
+            responce.Cordinates = coordinate;
+            return Ok(responce);
+
         }
     }
 }
