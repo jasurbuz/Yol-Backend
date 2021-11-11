@@ -26,7 +26,6 @@ namespace Yol.Services.DTOs.RoadDtos
         public string Region { get; set; }
         [Required]
         public Guid CompanyId { get; set; }
-        [Required]
         public Guid AdminId { get; set; }
         [Required]
         public ICollection<Decimal[]> Cordinates { get; set; }
