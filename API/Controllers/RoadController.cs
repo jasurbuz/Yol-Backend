@@ -26,7 +26,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateApplication([FromBody] RoadForCreationDTO creationDto)
+        public async Task<IActionResult> CreateRoad([FromBody] RoadForCreationDTO creationDto)
         {
             var road = _mapper.Map<Road>(creationDto);
             foreach(var coodrinates in creationDto.Cordinates)
