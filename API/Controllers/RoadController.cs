@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Yol.API.Extensions;
 using Yol.Data.Models;
+using Yol.Services.DTOs;
 using Yol.Services.DTOs.RoadDtos;
 using Yol.Services.IRepository;
 
@@ -48,6 +49,30 @@ namespace Yol.API.Controllers
             await _unitOfWork.Roads.Insert(road);
             await _unitOfWork.Save();
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRoads([FromForm] RequestParams requestParams)
+        {
+            if (requestParams.OrderBy is null)
+            {
+                requestParams.OrderBy = "StartedAt";
+            }
+            var roads = await _unitOfWork.Roads.GetPagedList(requestParams, order => order.OrderBy(requestParams.OrderBy), 
+                new List<string>() { "Admin", "Company" });
+            var response = new ResponseDto
+            {
+                PageCount = roads.PageCount,
+                Total = roads.TotalItemCount,
+                Current = roads.PageNumber,
+                PageSize = roads.PageSize,
+                HasPreviousPage = roads.HasPreviousPage,
+                HasNextPage = roads.HasNextPage,
+                FirstItemOnPage = roads.FirstItemOnPage,
+                LastItemOnPage = roads.LastItemOnPage,
+                Data = _mapper.Map<IEnumerable<RoadDTO>>(roads)
+            };
+            return Ok(response);
         }
     }
 }

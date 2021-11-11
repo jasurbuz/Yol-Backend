@@ -31,6 +31,7 @@ namespace Yol.API.Configurations
                 ? $"{CustomServices.GetBaseUrl()}/Others/{source.AdditionalFileName}" : null)).ReverseMap();
 
             CreateMap<Road, RoadForCreationDTO>().ReverseMap();
+            CreateMap<Road, RoadDTO>().ReverseMap();
         }
     }
 }
