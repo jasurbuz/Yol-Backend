@@ -20,8 +20,6 @@ namespace Yol.Services.Repository
         
         private IGenericRepository<Company> _companies;
         private IGenericRepository<Road> _roads;
-        private IGenericRepository<Coordinate> _coordinates;
-        private IGenericRepository<CoordinateValue> _values;
         private IGenericRepository<Image> _images; 
         private IGenericRepository<Admin> _admins;
         private GenericRepository<Application> _application;
@@ -41,8 +39,6 @@ namespace Yol.Services.Repository
         #region Public mambers
         public IGenericRepository<Company> Companies => _companies ??= new GenericRepository<Company>(_context);
         public IGenericRepository<Road> Roads => _roads ??= new GenericRepository<Road>(_context);
-        public IGenericRepository<Coordinate> Coordinates => _coordinates ??= new GenericRepository<Coordinate>(_context);
-        public IGenericRepository<CoordinateValue> Values => _values ??= new GenericRepository<CoordinateValue>(_context);
         public IGenericRepository<Application> Applications => _application ??= new GenericRepository<Application>(_context);
         public IGenericRepository<News> News => _news ??= new GenericRepository<News>(_context);
         public IGenericRepository<Admin> Admins => _admins ??= new GenericRepository<Admin>(_context);

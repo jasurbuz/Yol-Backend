@@ -10,6 +10,7 @@ using Yol.Services.DTOs;
 using Yol.Services.DTOs.CompanyDtos;
 using Yol.Services.IRepository;
 using Yol.API.Extensions;
+using Yol.Services;
 
 namespace Yol.API.Controllers
 {
@@ -68,8 +69,14 @@ namespace Yol.API.Controllers
             var company = await _unitOfWork.Companies.Get(p => p.Id == Id);
             if(company is null)
                 return NotFound("Company doesn't found");
+
+            if (!string.IsNullOrEmpty(company.LicenseFileName))
+                company.LicenseFileName = $"{CustomServices.GetBaseUrl()}/Images/{company.LicenseFileName}";
+
+            if(!string.IsNullOrEmpty(company.SucessfullPlansFileName))
+                company.SucessfullPlansFileName = $"{CustomServices.GetBaseUrl()}/Images/{company.SucessfullPlansFileName}";
+
             return Ok(company);
-        
         }
 
         [HttpPut("{Id}")]

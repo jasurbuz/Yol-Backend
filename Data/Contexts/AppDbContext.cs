@@ -16,8 +16,6 @@ namespace YolData
 
         public DbSet<Road> Roads { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<Coordinate> Coordinates { get; set; }
-        public DbSet<CoordinateValue> Values { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<News> Newses { get; set; }
         public DbSet<Admin> Admins { get; set; }
@@ -34,14 +32,8 @@ namespace YolData
                 .HasMany<Road>(company => company.Roads)
                 .WithOne(road => road.Company);
             builder.Entity<Road>()
-                .HasMany<Coordinate>(road => road.Cordinates)
-                .WithOne(coordinate => coordinate.Road);
-            builder.Entity<Road>()
                 .HasMany<Image>(road => road.Images)
                 .WithOne(image => image.Road);
-            builder.Entity<Coordinate>()
-                .HasMany<CoordinateValue>(coordinate => coordinate.Values)
-                .WithOne(value => value.Coordinate);
             
             builder.Entity<Admin>()
                 .HasMany<News>(user => user.News)

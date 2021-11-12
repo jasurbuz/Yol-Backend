@@ -18,8 +18,6 @@ namespace Yol.Services.IRepository
         void DeleteFile(string fileName, string folder = "Images");
         IGenericRepository<Company> Companies { get; }
         IGenericRepository<Road> Roads { get; }
-        IGenericRepository<Coordinate> Coordinates { get; }
-        IGenericRepository<CoordinateValue> Values { get; }
         IGenericRepository<Application> Applications { get; }
         IGenericRepository<News> News { get; }
         IGenericRepository<Admin> Admins { get; }
