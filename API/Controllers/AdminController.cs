@@ -26,7 +26,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAdmin([FromForm]AdminForCreationDto creationDto)
+        public async Task<IActionResult> CreateAdmin([FromForm]AdminForCreationDto creationDto)
         {
             var admin = _mapper.Map<Admin>(creationDto);
             await _unitOfWork.Admins.Insert(admin);

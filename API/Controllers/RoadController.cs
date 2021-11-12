@@ -99,5 +99,19 @@ namespace Yol.API.Controllers
 
             return Ok(response);
         }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteRoad(Guid Id)
+        {
+            var road = await _unitOfWork.Roads.Get(p => p.Id == Id);
+            if (road is null)
+                return NotFound("Road doesn't found");
+            _unitOfWork.Roads.Delete(road);
+            await _unitOfWork.Save();
+            return NoContent();
+        }
+
+
+
     }
 }
