@@ -100,6 +100,24 @@ namespace Yol.API.Controllers
             return Ok(response);
         }
 
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> UpdateRoad([FromForm] RoadForCreationDTO creationDTO, Guid Id)
+        {
+            var road = await _unitOfWork.Roads.Get(p => p.Id == Id);
+            if (road is null)
+                return NotFound("Road doesn't found");
+            if (creationDTO.Images != null)
+                foreach (var image in creationDTO.Images)
+                {
+                    Image image1 = new Image() { Id = Guid.NewGuid(), RoadId = road.Id, FileName = await _unitOfWork.SaveFileAsync(image) };
+                    await _unitOfWork.Images.Insert(image1);
+                }
+            _mapper.Map(creationDTO, road);
+            _unitOfWork.Roads.Update(road);
+            await _unitOfWork.Save();
+            return NoContent();
+        }
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteRoad(Guid Id)
         {
@@ -110,8 +128,5 @@ namespace Yol.API.Controllers
             await _unitOfWork.Save();
             return NoContent();
         }
-
-
-
     }
 }
