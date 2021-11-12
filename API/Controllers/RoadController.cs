@@ -84,7 +84,20 @@ namespace Yol.API.Controllers
                 responce.Cordinates = JsonConvert.DeserializeObject<List<decimal[]>>(road.Coordinate);
 
             return Ok(responce);
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllCoordinate([FromForm] string region = "All")
+        {
+            IEnumerable<Road> data;
+            if (region == "All")
+                data = await _unitOfWork.Roads.GetAll();
+            else
+                data = await _unitOfWork.Roads.GetAll(r => r.Region == region);
+            
+            var response = _mapper.Map<IEnumerable<RoadForMapDTO>>(data);
+
+            return Ok(response);
         }
     }
 }

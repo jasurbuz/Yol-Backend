@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace Yol.API.Configurations
 
             CreateMap<Road, RoadForCreationDTO>().ReverseMap();
             CreateMap<Road, RoadDTO>().ReverseMap();
+            CreateMap<Road, RoadForMapDTO>().ForMember(dto => dto.Coordinates,
+                src => src.MapFrom(source => !string.IsNullOrEmpty(source.Coordinate) ?
+                JsonConvert.DeserializeObject<ICollection<decimal[]>>(source.Coordinate) : null)).ReverseMap();
 
             CreateMap<Admin, AdminForCreationDto>().ReverseMap();
             CreateMap<Admin, AdminDto>().ReverseMap();
