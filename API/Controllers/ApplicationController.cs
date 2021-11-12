@@ -60,19 +60,19 @@ namespace Yol.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetApplication(Guid Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetApplication(Guid id)
         {
-            var application = await _unitOfWork.Applications.Get(p => p.Id == Id);
+            var application = await _unitOfWork.Applications.Get(p => p.Id == id);
             if (application is null)
                 return NotFound("Application doesn't found");
             return Ok(application);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateApplication([FromForm] ApplicationForCreationDto creationDto, Guid Id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateApplication([FromForm] ApplicationForCreationDto creationDto, Guid id)
         {
-            var application = await _unitOfWork.Applications.Get(p => p.Id == Id);
+            var application = await _unitOfWork.Applications.Get(p => p.Id == id);
             if (application != null)
                 return NotFound("Application doesn't found");
             _mapper.Map(creationDto, application);
@@ -84,10 +84,10 @@ namespace Yol.API.Controllers
 
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteApplication(Guid Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteApplication(Guid id)
         {
-            var application = await _unitOfWork.Applications.Get(p => p.Id == Id);
+            var application = await _unitOfWork.Applications.Get(p => p.Id == id);
             if(application is null)
             {
                 return NotFound("Application doesn't found");

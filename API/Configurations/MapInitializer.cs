@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Yol.Data.Models;
+using Yol.Data.Models.Indentity;
 using Yol.Services;
+using Yol.Services.DTOs.AdminDtos;
 using Yol.Services.DTOs.ApplicationDtos;
 using Yol.Services.DTOs.CompanyDtos;
 using Yol.Services.DTOs.RoadDtos;
@@ -32,6 +34,9 @@ namespace Yol.API.Configurations
 
             CreateMap<Road, RoadForCreationDTO>().ReverseMap();
             CreateMap<Road, RoadDTO>().ReverseMap();
+
+            CreateMap<Admin, AdminForCreationDto>().ReverseMap();
+            CreateMap<Admin, AdminDto>().ReverseMap();
         }
     }
 }
