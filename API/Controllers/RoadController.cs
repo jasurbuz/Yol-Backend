@@ -106,6 +106,12 @@ namespace Yol.API.Controllers
             var road = await _unitOfWork.Roads.Get(p => p.Id == Id);
             if (road is null)
                 return NotFound("Road doesn't found");
+            if(road.Images is not null)
+                foreach(var image in road.Images)
+                {
+                    _unitOfWork.DeleteFile(image.FileName);
+                }
+            road.Images = new List<Image>();
             if (creationDTO.Images != null)
                 foreach (var image in creationDTO.Images)
                 {
