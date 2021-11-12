@@ -21,7 +21,6 @@ namespace Yol.Services.DTOs.RoadDtos
         public string Source { get; set; }
         public string Responsible { get; set; }
         public string Region { get; set; }
-        public Admin Admin { get; set; }
         public ICollection<decimal[]> Cordinates { get; set; }
         public ICollection<string> Images { get; set; }
     }

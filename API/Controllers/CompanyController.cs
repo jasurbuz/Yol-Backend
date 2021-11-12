@@ -34,6 +34,7 @@ namespace Yol.API.Controllers
                 company.LicenseFileName = await _unitOfWork.SaveFileAsync(creationDto.LicenseFile, "License");
             if (creationDto.SucessfullPlansFile is not null)
                 company.SucessfullPlansFileName = await _unitOfWork.SaveFileAsync(creationDto.SucessfullPlansFile, "Plans");
+            
             await _unitOfWork.Companies.Insert(company);
             await _unitOfWork.Save();
             return Ok();

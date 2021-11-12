@@ -28,7 +28,7 @@ namespace Yol.Services.DTOs.RoadDtos
         public Guid CompanyId { get; set; }
         public Guid AdminId { get; set; }
         [Required]
-        public string Cordinate { get; set; }
+        public ICollection<decimal[]> Cordinates { get; set; }
         public ICollection<IFormFile> Images { get; set; }
     }
 }
