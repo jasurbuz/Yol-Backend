@@ -26,28 +26,16 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRoad([FromBody] RoadForCreationDTO creationDto)
+        public async Task<IActionResult> CreateRoad([FromForm] RoadForCreationDTO creationDto)
         {
             var road = _mapper.Map<Road>(creationDto);
-            foreach(var coodrinates in creationDto.Cordinates)
-            {
-                Coordinate coordinate = new Coordinate() { RoadId = road.Id, Id = Guid.NewGuid() };
-                await _unitOfWork.Coordinates.Insert(coordinate);
-                foreach(var value in coodrinates)
-                {
-                    CoordinateValue coordinateValue = new CoordinateValue() { CoordinateId = coordinate.Id, Value = value, Id = Guid.NewGuid() };
-                    await _unitOfWork.Values.Insert(coordinateValue);
-                }
-            }
+            
             if(creationDto.Images != null)
                 foreach(var image in creationDto.Images)
                 {
                     Image image1 = new Image() { Id = Guid.NewGuid(), RoadId = road.Id, FileName = await _unitOfWork.SaveFileAsync(image)};
                     await _unitOfWork.Images.Insert(image1);
                 }
-            
-            
-            
             await _unitOfWork.Roads.Insert(road);
             await _unitOfWork.Save();
             return Ok();
@@ -83,22 +71,12 @@ namespace Yol.API.Controllers
             if(road is null)
                 return NotFound("Road doesn't found");
             var images = new List<string>();
+            
             foreach (var image in road.Images)
                 images.Add($"{CustomServices.GetBaseUrl()}/Images/{image.FileName}");
-            var coordinates = await _unitOfWork.Coordinates.GetAll(p => p.RoadId == Id, includes: new List<string>() { "Values" });
-            var res = coordinates.ToList().GroupBy(p => p.RoadId).ToList();
-            var coordinate = new List<decimal[]>();
-            foreach (var item in res)
-                foreach (var item2 in item)
-                {
-                    decimal[] array = new decimal[2];
-                    for (int i = 0; i < 2; i++) 
-                        array[i] = item2.Values.ToList()[i].Value;
-                    coordinate.Add(array);
-                }
+            
             var responce = _mapper.Map<RoadDTO>(road);
             responce.Images = images;
-            responce.Cordinates = coordinate;
             return Ok(responce);
 
         }
