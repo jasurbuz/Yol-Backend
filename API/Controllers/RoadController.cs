@@ -27,7 +27,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRoad([FromForm] RoadForCreationDTO creationDto)
+        public async Task<IActionResult> CreateRoad([FromBody] RoadForCreationDTO creationDto)
         {
             var road = _mapper.Map<Road>(creationDto);
             
@@ -43,7 +43,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRoads([FromBody] RequestParams requestParams)
+        public async Task<IActionResult> GetRoads([FromForm] RequestParams requestParams)
         {
             if (requestParams.OrderBy is null)
             {
