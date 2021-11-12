@@ -38,10 +38,10 @@ namespace Yol.API.Controllers
         public async Task<IActionResult> GetAdmins([FromQuery] RequestParams requestParams)
         {
             if (requestParams.OrderBy is null)
-                requestParams.OrderBy = "Region";
+                    requestParams.OrderBy = "Region";
             var admins = await _unitOfWork.Admins.GetPagedList(requestParams,
                 order => order.OrderBy(requestParams.OrderBy),
-                includes: new List<string> { "News"});
+                includes: new List<string> { "News" });
             var response = new ResponseDto
             {
                 PageCount = admins.PageCount,
@@ -89,8 +89,10 @@ namespace Yol.API.Controllers
             var admin = await _unitOfWork.Admins.Get(p => p.Id == id);
             if(admin == null)
                 return NotFound("Admin doesn't found");
+            
             _unitOfWork.Admins.Delete(admin);
             await _unitOfWork.Save();
+            
             return NoContent();
         }
 

@@ -43,7 +43,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRoads([FromForm] RequestParams requestParams)
+        public async Task<IActionResult> GetRoads([FromBody] RequestParams requestParams)
         {
             if (requestParams.OrderBy is null)
             {
@@ -79,7 +79,8 @@ namespace Yol.API.Controllers
             var responce = _mapper.Map<RoadDTO>(road);
             responce.Images = images;
 
-            responce.Cordinates = JsonConvert.DeserializeObject<List<decimal[]>>(road.Coordinate);
+            if(road.Coordinate is not null)
+                responce.Cordinates = JsonConvert.DeserializeObject<List<decimal[]>>(road.Coordinate);
 
             return Ok(responce);
 
