@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yol.Data.Models;
+using Yol.Services.DTOs.RoadDtos;
 
 namespace Yol.Services.DTOs.CompanyDtos
 {
@@ -16,6 +17,6 @@ namespace Yol.Services.DTOs.CompanyDtos
         public int NumberOfEmployees { get; set; }
         public string SucessfullPlansFileName { get; set; }
         public string LicenseFileName { get; set; }
-        public ICollection<Road> Roads { get; set; }
+        public ICollection<RoadDTO> Roads { get; set; }
     }
 }
