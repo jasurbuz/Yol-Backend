@@ -31,7 +31,7 @@ namespace API
             {
                 Log.Information("Application is starting");
 
-                CreateHostBuilder(args).Build().Run();
+                BuildWebHost(args).Run();
             }
             catch (Exception ex)
             {
@@ -43,11 +43,9 @@ namespace API
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHost BuildWebHost(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            .Build();
     }
 }
