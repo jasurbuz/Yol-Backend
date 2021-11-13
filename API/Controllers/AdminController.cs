@@ -9,6 +9,8 @@ using Yol.Services.DTOs;
 using Yol.Services.DTOs.AdminDtos;
 using Yol.Services.IRepository;
 using Yol.API.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Yol.Data.Models;
 
 namespace Yol.API.Controllers
 {
@@ -18,20 +20,45 @@ namespace Yol.API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApiUser> _userManager;
 
-        public AdminController(IUnitOfWork unitOfWork, IMapper mapper)
+        public AdminController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApiUser> userManager)
         {
             this._unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdmin([FromForm]AdminForCreationDto creationDto)
+        public async Task<IActionResult> CreateAdmin([FromForm]AdminForCreationDto adminDto, string role = "Admin")
         {
-            var admin = _mapper.Map<Admin>(creationDto);
-            await _unitOfWork.Admins.Insert(admin);
-            await _unitOfWork.Save();
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            if (_userManager.Users.Any(user => user.UserName == adminDto.Username))
+                return BadRequest(new { Error = "Username already exist!" });
+            
+            var admin = _mapper.Map<Admin>(adminDto);
+
+            admin.NormalizedUserName = adminDto.Username.ToUpper();
+
+            var result = await _userManager.CreateAsync(admin, adminDto.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            await _userManager.AddToRoleAsync(admin, role);
+
+            return Accepted();
         }
 
         [HttpGet]
@@ -64,23 +91,37 @@ namespace Yol.API.Controllers
             var admin = await _unitOfWork.Admins.Get(p => p.Id == id);
             if (admin == null)
                 return NotFound("Admin doesn't found");
-            return Ok(admin);
+            return Ok(_mapper.Map<AdminDto>(admin));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAdmin([FromForm] AdminForCreationDto adminDto, Guid id)
         {
-            var admin = await _unitOfWork.Admins.Get(p => p.Id == id);
-            if (admin != null)
+            if (!ModelState.IsValid)
             {
-                _mapper.Map(adminDto, admin);
-
-                _unitOfWork.Admins.Update(admin);
-                await _unitOfWork.Save();
-                return Ok();
+                return BadRequest(ModelState);
             }
-            else
-                return NotFound("Admin doesn't found");
+
+            var admin = await _unitOfWork.Admins.Get(admin => admin.Id == id, tracking: true);
+
+            if (admin.UserName != adminDto.Username)
+            {
+                if (_userManager.Users.Any(user => user.UserName == adminDto.Username))
+                    return BadRequest(new { Error = "Username already exist!" });
+            }
+
+            if (admin is null)
+                return NotFound();
+
+            _mapper.Map(adminDto, admin);
+
+            admin.NormalizedUserName = admin.UserName.ToUpper();
+
+            _unitOfWork.Admins.Update(admin);
+
+            await _unitOfWork.Save();
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

@@ -13,6 +13,7 @@ using Yol.Data.Models;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
+using Yol.API.Services;
 
 namespace API
 {
@@ -35,6 +36,7 @@ namespace API
             services.AddMemoryCache();
             services.AddIdentityCore<ApiUser>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
             services.AddControllers();
             services.AddCors(options =>
             {
@@ -49,6 +51,7 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+            
             services.AddRouting(options => options.LowercaseUrls = true);
         }
 
@@ -66,9 +69,16 @@ namespace API
 
             app.UseCors("AllowAll");
 
+            app.UseResponseCaching();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Images")),
+                RequestPath = "/Images"
+            });
+
             app.UseRouting();
             
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

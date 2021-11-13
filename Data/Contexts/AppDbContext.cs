@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Yol.Data.Configuration;
 using Yol.Data.Models;
 using Yol.Data.Models.Indentity;
 
@@ -43,6 +44,8 @@ namespace YolData
                 .HasMany<Road>(user => user.Roads)
                 .WithOne(road => road.Admin);
             #endregion
+
+            builder.ApplyConfiguration(new RoleConfiguration());
 
             base.OnModelCreating(builder);
         }
