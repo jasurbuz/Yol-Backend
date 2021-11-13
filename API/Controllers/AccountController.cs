@@ -79,7 +79,7 @@ namespace Yol.API.Controllers
 
             dynamic userWithToken = MapUserWithToken(user, role);
 
-            userWithToken.Details.Role = role;
+            userWithToken.Role = role;
 
             if (hasToken)
                 userWithToken.Token = await _authManager.CreateToken();
