@@ -34,10 +34,14 @@ namespace API
                 ));
 
             services.AddMemoryCache();
-            services.AddIdentityCore<ApiUser>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAuthManager, AuthManager>();
-            services.AddControllers();
+            services.ConfigureHttpCacheHeaders();
+            services.AddHealthChecks();
+            
+
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJwt(Configuration);
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -45,14 +49,19 @@ namespace API
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+            services.AddIdentityCore<ApiUser>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
-            
+            services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,8 +77,10 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");
-
+            
             app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
+            app.ConfigurExceptionHandler();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Images")),
@@ -83,6 +94,7 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/healthcheck");
                 endpoints.MapControllers();
             });
         }
