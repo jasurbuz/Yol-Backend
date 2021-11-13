@@ -81,11 +81,7 @@ namespace API
             app.UseResponseCaching();
             app.UseHttpCacheHeaders();
             app.ConfigurExceptionHandler();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Images")),
-                RequestPath = "/Images"
-            });
+            
 
             app.UseRouting();
             
