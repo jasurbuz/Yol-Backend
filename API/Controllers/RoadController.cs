@@ -103,7 +103,7 @@ namespace Yol.API.Controllers
         [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateRoad([FromForm] RoadForCreationDTO creationDTO, Guid Id)
         {
-            var road = await _unitOfWork.Roads.Get(p => p.Id == Id);
+            var road = await _unitOfWork.Roads.Get(p => p.Id == Id, includes: new List<string>() { "Images" });
             if (road is null)
                 return NotFound("Road doesn't found");
             if(road.Images is not null)
@@ -127,9 +127,13 @@ namespace Yol.API.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteRoad(Guid Id)
         {
-            var road = await _unitOfWork.Roads.Get(p => p.Id == Id);
+            var road = await _unitOfWork.Roads.Get(p => p.Id == Id, includes: new List<string>() { "Images" });
             if (road is null)
                 return NotFound("Road doesn't found");
+            foreach (var image in road.Images)
+            {
+                _unitOfWork.DeleteFile(image.FileName);
+            }
             _unitOfWork.Roads.Delete(road);
             await _unitOfWork.Save();
             return NoContent();
