@@ -30,7 +30,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdmin([FromForm]AdminForCreationDto adminDto, string role = "Admin")
+        public async Task<IActionResult> CreateAdmin([FromBody]AdminForCreationDto adminDto, string role = "Admin")
         {
             if (!ModelState.IsValid)
             {
