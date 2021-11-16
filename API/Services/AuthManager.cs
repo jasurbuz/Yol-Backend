@@ -64,7 +64,7 @@ namespace Yol.API.Services
 
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("Role", role));
             }
 
             return claims;
