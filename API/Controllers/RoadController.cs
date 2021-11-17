@@ -29,6 +29,12 @@ namespace Yol.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRoad([FromBody] RoadForCreationDTO creationDto)
         {
+            var company = _unitOfWork.Companies.Get(p => p.Id == creationDto.CompanyId);
+            if (company is null)
+                return NotFound("Company doesn't found");
+            var admin = _unitOfWork.Admins.Get(p => p.Id == creationDto.AdminId);
+            if (admin is null)
+                return NotFound("Admin doesn't found");
             var road = _mapper.Map<Road>(creationDto);
             
             if(creationDto.Images != null)
