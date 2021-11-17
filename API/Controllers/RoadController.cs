@@ -43,7 +43,14 @@ namespace Yol.API.Controllers
                     Image image1 = new Image() { Id = Guid.NewGuid(), RoadId = road.Id, FileName = await _unitOfWork.SaveFileAsync(image)};
                     await _unitOfWork.Images.Insert(image1);
                 }
-            road.Coordinate = JsonConvert.SerializeObject(creationDto.Cordinates);
+            try
+            {
+                road.Coordinate = JsonConvert.SerializeObject(creationDto.Cordinates);
+            }
+            catch
+            {
+                return BadRequest("Invalid coordinate value");
+            }
             await _unitOfWork.Roads.Insert(road);
             await _unitOfWork.Save();
             return Ok();
