@@ -16,6 +16,9 @@ namespace Yol.Services.DTOs.ApplicationDtos
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+        [Required]
         public string Province { get; set; }
         [Required]
         public string District { get; set; }
