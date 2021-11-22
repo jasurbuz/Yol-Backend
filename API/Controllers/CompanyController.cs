@@ -14,7 +14,7 @@ using Yol.Services;
 
 namespace Yol.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CompanyController : ControllerBase
     {
