@@ -11,7 +11,7 @@ using Yol.Services.IRepository;
 
 namespace Yol.API.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("/api/[controller]/[action]")]
     [ApiController]
     public class NewsController : ControllerBase
     {

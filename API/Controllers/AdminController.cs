@@ -14,7 +14,7 @@ using Yol.Data.Models;
 
 namespace Yol.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
