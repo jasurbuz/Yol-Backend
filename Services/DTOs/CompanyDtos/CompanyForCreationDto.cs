@@ -18,9 +18,9 @@ namespace Yol.Services.DTOs.CompanyDtos
         public DateTime DateOfFoundation { get; set; }
         [Required]
         public int NumberOfEmployees { get; set; }
-        [Required]
+        
         public IFormFile SucessfullPlansFile { get; set; }
-        [Required]
+        
         public IFormFile LicenseFile { get; set; }
     }
 }
