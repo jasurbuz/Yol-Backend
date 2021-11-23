@@ -30,6 +30,7 @@ namespace Yol.API.Controllers
         public async Task<IActionResult> CreateCompany([FromForm] CompanyForCreationDto creationDto)
         {
             var company = _mapper.Map<Company>(creationDto);
+            company.DateOfFoundation = DateTime.Parse(creationDto.DateOfFoundation);
             if (creationDto.LicenseFile is not null)
                 company.LicenseFileName = await _unitOfWork.SaveFileAsync(creationDto.LicenseFile, "License");
             if (creationDto.SucessfullPlansFile is not null)
@@ -88,6 +89,8 @@ namespace Yol.API.Controllers
                 return NotFound("Company doesn't found");
 
             _mapper.Map(companyDto, company);
+
+            company.DateOfFoundation = DateTime.Parse(companyDto.DateOfFoundation);
             
             if(companyDto.LicenseFile is not null)
             {

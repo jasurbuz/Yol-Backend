@@ -15,7 +15,7 @@ namespace Yol.Services.DTOs.CompanyDtos
         [Required]
         public string INN { get; set; }
         [Required]
-        public DateTime DateOfFoundation { get; set; }
+        public string DateOfFoundation { get; set; }
         [Required]
         public int NumberOfEmployees { get; set; }
         
