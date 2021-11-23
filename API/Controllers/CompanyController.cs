@@ -27,7 +27,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCompany([FromBody]CompanyForCreationDto creationDto)
+        public async Task<IActionResult> CreateCompany([FromForm] CompanyForCreationDto creationDto)
         {
             var company = _mapper.Map<Company>(creationDto);
             if (creationDto.LicenseFile is not null)
