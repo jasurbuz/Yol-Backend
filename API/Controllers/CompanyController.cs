@@ -38,7 +38,7 @@ namespace Yol.API.Controllers
             
             await _unitOfWork.Companies.Insert(company);
             await _unitOfWork.Save();
-            return Ok();
+            return Ok(company);
         }
         [HttpGet]
         public async Task<IActionResult> GetCompanies([FromQuery] RequestParams requestParams)

@@ -32,7 +32,7 @@ namespace Yol.API.Controllers
                 application.AdditionalFileName = await _unitOfWork.SaveFileAsync(creationDto.AdditionalFile, "Others");
             await _unitOfWork.Applications.Insert(application);
             await _unitOfWork.Save();
-            return Ok();
+            return Ok(application);
         }
 
         [HttpGet]

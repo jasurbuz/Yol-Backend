@@ -33,7 +33,7 @@ namespace Yol.API.Controllers
             var news = _mapper.Map<News>(creationDto);
             await _unitOfWork.News.Insert(news);
             await _unitOfWork.Save();
-            return Ok();
+            return Ok(news);
         }
 
         [HttpGet]

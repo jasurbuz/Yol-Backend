@@ -53,7 +53,7 @@ namespace Yol.API.Controllers
             }
             await _unitOfWork.Roads.Insert(road);
             await _unitOfWork.Save();
-            return Ok();
+            return Ok(road);
         }
 
         [HttpGet]
