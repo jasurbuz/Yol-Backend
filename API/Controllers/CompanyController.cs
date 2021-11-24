@@ -122,7 +122,7 @@ namespace Yol.API.Controllers
                 return NotFound("Company doesn't found");
             _unitOfWork.Companies.Delete(company);
             await _unitOfWork.Save();
-            return NoContent();
+            return Ok("Deleted");
         }
         
     }

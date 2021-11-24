@@ -149,7 +149,7 @@ namespace Yol.API.Controllers
             }
             _unitOfWork.Roads.Delete(road);
             await _unitOfWork.Save();
-            return NoContent();
+            return Ok("Deleted");
         }
     }
 }
