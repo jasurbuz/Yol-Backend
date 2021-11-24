@@ -30,14 +30,21 @@ namespace Yol.API.Controllers
         public async Task<IActionResult> CreateCompany([FromForm] CompanyForCreationDto creationDto)
         {
             var company = _mapper.Map<Company>(creationDto);
-            company.DateOfFoundation = DateTime.Parse(creationDto.DateOfFoundation);
-            if (creationDto.LicenseFile is not null)
-                company.LicenseFileName = await _unitOfWork.SaveFileAsync(creationDto.LicenseFile, "License");
-            if (creationDto.SucessfullPlansFile is not null)
-                company.SucessfullPlansFileName = await _unitOfWork.SaveFileAsync(creationDto.SucessfullPlansFile, "Plans");
-            
-            await _unitOfWork.Companies.Insert(company);
-            await _unitOfWork.Save();
+            try
+            {
+                company.DateOfFoundation = DateTime.Parse(creationDto.DateOfFoundation);
+                if (creationDto.LicenseFile is not null)
+                    company.LicenseFileName = await _unitOfWork.SaveFileAsync(creationDto.LicenseFile, "License");
+                if (creationDto.SucessfullPlansFile is not null)
+                    company.SucessfullPlansFileName = await _unitOfWork.SaveFileAsync(creationDto.SucessfullPlansFile, "Plans");
+
+                await _unitOfWork.Companies.Insert(company);
+                await _unitOfWork.Save();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok(company);
         }
         [HttpGet]
