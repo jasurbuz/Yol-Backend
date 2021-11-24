@@ -12,7 +12,6 @@ namespace Yol.Data.Models
         public Guid Id { get; set; }
         public string Fullname { get; set; }
         public string INN { get; set; }
-        public DateTime DateOfFoundation { get; set; }
         public int NumberOfEmployees { get; set; }
         public string SucessfullPlansFileName { get; set; }
         public string LicenseFileName { get; set; }

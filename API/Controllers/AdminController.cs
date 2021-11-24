@@ -11,6 +11,7 @@ using Yol.Services.IRepository;
 using Yol.API.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Yol.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Yol.API.Controllers
 {
@@ -62,6 +63,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAdmins([FromQuery] RequestParams requestParams)
         {
             if (requestParams.OrderBy is null)

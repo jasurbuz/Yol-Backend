@@ -11,8 +11,9 @@ namespace Yol.Services.DTOs.CompanyDtos
     public class CompanyForCreationDto
     {
         public string Fullname { get; set; }
+
         public string INN { get; set; }
-        public string DateOfFoundation { get; set; }
+
         public int NumberOfEmployees { get; set; }
         
         public IFormFile SucessfullPlansFile { get; set; }
