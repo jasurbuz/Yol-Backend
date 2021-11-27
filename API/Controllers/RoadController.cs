@@ -114,7 +114,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateRoad([FromForm] RoadForCreationDTO creationDTO, Guid Id)
+        public async Task<IActionResult> UpdateRoad([FromBody] RoadForCreationDTO creationDTO, Guid Id)
         {
             var road = await _unitOfWork.Roads.Get(p => p.Id == Id, includes: new List<string>() { "Images" });
             if (road is null)
