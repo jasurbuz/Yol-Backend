@@ -10,6 +10,7 @@ using Yol.Services;
 using Yol.Services.DTOs.AdminDtos;
 using Yol.Services.DTOs.ApplicationDtos;
 using Yol.Services.DTOs.CompanyDtos;
+using Yol.Services.DTOs.NewsDtos;
 using Yol.Services.DTOs.RoadDtos;
 
 namespace Yol.API.Configurations
@@ -38,6 +39,9 @@ namespace Yol.API.Configurations
             CreateMap<Road, RoadForMapDTO>().ForMember(dto => dto.Coordinates,
                 src => src.MapFrom(source => !string.IsNullOrEmpty(source.Coordinate) ?
                 JsonConvert.DeserializeObject<ICollection<decimal[]>>(source.Coordinate) : null)).ReverseMap();
+
+            CreateMap<News, NewsDTO>().ReverseMap();
+            CreateMap<News, NewsForCreationDto>().ReverseMap();
 
             CreateMap<Admin, AdminForCreationDto>().ReverseMap();
             CreateMap<Admin, AdminDto>().ReverseMap();
