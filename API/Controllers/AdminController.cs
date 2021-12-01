@@ -69,8 +69,7 @@ namespace Yol.API.Controllers
             if (requestParams.OrderBy is null)
                     requestParams.OrderBy = "Region";
             var admins = await _unitOfWork.Admins.GetPagedList(requestParams,
-                order => order.OrderBy(requestParams.OrderBy),
-                includes: new List<string> { "News" });
+                order => order.OrderBy(requestParams.OrderBy));
             var response = new ResponseDto
             {
                 PageCount = admins.PageCount,
