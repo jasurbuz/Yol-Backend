@@ -89,7 +89,7 @@ namespace Yol.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdmin(Guid id)
         {
-            var admin = await _unitOfWork.Admins.Get(p => p.Id == id, new List<string>() { "Road", "News" });
+            var admin = await _unitOfWork.Admins.Get(p => p.Id == id);
             if (admin == null)
                 return NotFound("Admin doesn't found");
             return Ok(_mapper.Map<AdminDto>(admin));
