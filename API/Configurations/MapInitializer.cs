@@ -40,7 +40,9 @@ namespace Yol.API.Configurations
                 src => src.MapFrom(source => !string.IsNullOrEmpty(source.Coordinate) ?
                 JsonConvert.DeserializeObject<ICollection<decimal[]>>(source.Coordinate) : null)).ReverseMap();
 
-            CreateMap<News, NewsDTO>().ReverseMap();
+            CreateMap<News, NewsDTO>().ForMember(dto => dto.ImageName,
+                src => src.MapFrom(source => !string.IsNullOrEmpty(source.ImageName)
+                ? $"{CustomServices.GetBaseUrl()}/News/{source.ImageName}" : null)).ReverseMap();
             CreateMap<News, NewsForCreationDto>().ReverseMap();
 
             CreateMap<Admin, AdminForCreationDto>().ReverseMap();

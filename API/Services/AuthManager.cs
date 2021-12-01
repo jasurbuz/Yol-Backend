@@ -55,9 +55,10 @@ namespace Yol.API.Services
 
         private async Task<List<Claim>> GetClaims()
         {
-            var claims = new List<Claim>
+            var claims = new List<Claim>()
             {
-                new Claim("Name", _user.UserName)
+                new Claim(ClaimTypes.Name, _user.UserName),
+                new Claim("Id", _user.Id.ToString())
             };
 
             var roles = await _userManager.GetRolesAsync(_user);
