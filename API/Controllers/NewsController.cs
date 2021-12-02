@@ -31,6 +31,8 @@ namespace Yol.API.Controllers
             if (admin == null)
                 return NotFound("Admin doesn't found");
             var news = _mapper.Map<News>(creationDto);
+            if(creationDto.ImageFile is not null)
+                news.ImageName = await _unitOfWork.SaveFileAsync(creationDto.ImageFile);
             await _unitOfWork.News.Insert(news);
             await _unitOfWork.Save();
             return Ok(news);
