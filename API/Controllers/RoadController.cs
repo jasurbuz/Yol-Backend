@@ -27,7 +27,7 @@ namespace Yol.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRoad([FromForm] RoadForCreationDTO creationDto)
+        public async Task<IActionResult> CreateRoad([FromBody] RoadForCreationDTO creationDto)
         {
             var company = await _unitOfWork.Companies.Get(p => p.Id == creationDto.CompanyId);
             if (company is null)
