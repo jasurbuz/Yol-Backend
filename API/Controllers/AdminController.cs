@@ -17,6 +17,7 @@ namespace Yol.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
