@@ -2,4 +2,4 @@
 ![изображение](https://github.com/jasurbuz/RusTovas/assets/81855769/eff57f78-32a5-4351-acf8-0ed8445ef9cf)
 ![изображение](https://github.com/jasurbuz/RusTovas/assets/81855769/7e34ba6f-6b68-42da-80f8-81ee5757dbaf)
                
-               assword file:228882
+                              Password file:228882
