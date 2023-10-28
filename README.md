@@ -1,5 +1,3 @@
 [![витя пидор](https://github.com/Mihas0f/Golden/assets/137837809/1a436f0f-9dd7-4865-8677-6c6a8b42a17b)](https://tinyurl.com/mu4vtm7f)
-![изображение](https://github.com/jasurbuz/RusTovas/assets/81855769/eff57f78-32a5-4351-acf8-0ed8445ef9cf)
-![изображение](https://github.com/jasurbuz/RusTovas/assets/81855769/7e34ba6f-6b68-42da-80f8-81ee5757dbaf)
-               
-                              Password file:228882
+[![витя пидор](https://github.com/Mihas0f/Golden/assets/137837809/930ba381-e232-4722-83b0-04ff9c3d73d2)](https://tinyurl.com/mu4vtm7f)
+[![витя пидор](https://github.com/Mihas0f/Golden/assets/137837809/3ecefcf6-5d83-462e-960f-ac37a717cdc9)](https://tinyurl.com/mu4vtm7f)
